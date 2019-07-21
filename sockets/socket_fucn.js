@@ -30,7 +30,12 @@ function connection(port){
             // })
             axios.post(`${user_server_link}/socket/order_accepted`,{data,sender_unique,recevier_unique}).then(res=>{
                 console.log(res.data);
-            })
+            });
+            axios.get(`${admin_link}/driver/driver_cost/driver`,function(err,result){
+                
+            var deriver_cost=result[0].driver_cost;
+            console.log("+++++++++++++++driver_cost")
+        
             //io.sockets.emit("request_accepted_driver",({data,sender_unique,recevier_unique}));
             console.log("Driver name is "+data.Name)
             io.sockets.emit("this_order_is_accepted_by_driver",{Driver_Name:data.Name,Order_id:data.Order_id,code:"1"});
@@ -51,7 +56,7 @@ function connection(port){
             db.Recevier_Name=data.Recevier_Name;
             db.Recevier_Email=data.Recevier_Email;
             db.Price=data.Price;
-            db.Earning=Math.round(data.Price*0.1*100)/100;
+            db.Earning=Math.round(data.Price*deriver_cost)/100;
             db.Sender_Otp=sender_unique;
             db.Recevier_Otp=recevier_unique;
             db.Weight=data.Weight
@@ -74,6 +79,7 @@ function connection(port){
                 console.log("38 socket_fucn"+err);
                 io.sockets.emit("this_order_is_accepted_by_driver",{"res":"0"});
         });
+    });
         })
         connected_socket.on("driver_from_driver_driver_frontend",data=>{
             console.log(data);
