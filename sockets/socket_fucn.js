@@ -89,7 +89,10 @@ function connection(port){
             console.log(data);
             io.sockets.emit('from_driver_to_user_frontend',data);
         })
-        })
+        }).catch(err=>{
+            console.log("93 line socket_fucn"+err,"+++++++++++++SSSSSSS+++++++++++");
+            
+    })
     })
     })
 }
