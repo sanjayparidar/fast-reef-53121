@@ -1,5 +1,6 @@
 const socket=require('socket.io');
 const axios=require('axios');
+const {local_link,driver_backend,admin_link}=require('../urls/links');
 
 
 
@@ -31,9 +32,10 @@ function connection(port){
             axios.post(`${user_server_link}/socket/order_accepted`,{data,sender_unique,recevier_unique}).then(res=>{
                 console.log(res.data);
             });
-            axios.get(`${admin_link}/driver/driver_cost/driver`,function(err,result){
+            axios.get(`${admin_link}/driver/configuration_of_cost/user`).then(result=>{
+
                 
-            var deriver_cost=result[0].driver_cost;
+            var deriver_cost=result.data[0].driver_cost;
             console.log("+++++++++++++++driver_cost")
         
             //io.sockets.emit("request_accepted_driver",({data,sender_unique,recevier_unique}));
@@ -79,7 +81,10 @@ function connection(port){
                 console.log("38 socket_fucn"+err);
                 io.sockets.emit("this_order_is_accepted_by_driver",{"res":"0"});
         });
-    });
+    }).catch(err=>{
+        res.status(400).json({msg:"User already exist in driver account",response:"5"});
+    })
+    
         })
         connected_socket.on("driver_from_driver_driver_frontend",data=>{
             console.log(data);
