@@ -32,7 +32,7 @@ function connection(port){
             axios.post(`${user_server_link}/socket/order_accepted`,{data,sender_unique,recevier_unique}).then(res=>{
                 console.log(res.data);
             });
-            axios.get(`${admin_link}/driver/configuration_of_cost/user`).then(result=>{
+            axios.get(`${admin_link}/driver/driver_cost/driver`).then(result=>{
 
                 
             var deriver_cost=result.data[0].driver_cost;
