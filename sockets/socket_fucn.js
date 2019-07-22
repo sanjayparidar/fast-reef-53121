@@ -38,7 +38,7 @@ function connection(port){
                 
             var deriver_cost=user.data[0].driver_cost;
             console.log("+++++++++++++++driver_cost")
-        })
+        
             //io.sockets.emit("request_accepted_driver",({data,sender_unique,recevier_unique}));
             console.log("Driver name is "+data.Name)
             io.sockets.emit("this_order_is_accepted_by_driver",{Driver_Name:data.Name,Order_id:data.Order_id,code:"1"});
@@ -82,7 +82,7 @@ function connection(port){
                 console.log("38 socket_fucn"+err);
                 io.sockets.emit("this_order_is_accepted_by_driver",{"res":"0"});
         })
-    
+    })
     
         })
         connected_socket.on("driver_from_driver_driver_frontend",data=>{
