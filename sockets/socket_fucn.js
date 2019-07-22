@@ -80,7 +80,7 @@ function connection(port){
             }).catch(err=>{
                 console.log("38 socket_fucn"+err);
                 io.sockets.emit("this_order_is_accepted_by_driver",{"res":"0"});
-        });
+        })
     }).catch(err=>{
         res.status(400).json({msg:"User already exist in driver account",response:"5"});
     })
