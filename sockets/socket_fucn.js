@@ -82,13 +82,15 @@ function connection(port){
                 console.log("38 socket_fucn"+err);
                 io.sockets.emit("this_order_is_accepted_by_driver",{"res":"0"});
         })
-    })
     
-        })
+    
+      
         connected_socket.on("driver_from_driver_driver_frontend",data=>{
             console.log(data);
             io.sockets.emit('from_driver_to_user_frontend',data);
         })
+        })
+    })
     })
 }
 
