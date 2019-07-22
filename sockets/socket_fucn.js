@@ -33,7 +33,7 @@ function connection(port){
                 console.log(res.data);
             });
             axios.get(`${admin_link}/driver/driver_cost/driver`).then(result=>{
-
+               console.log("SSSSSSSSSSSSSSSSSSSS",result,"ssssssssssssssssssssssssssssssssssssss")
                 
             var deriver_cost=result.data[0].driver_cost;
             console.log("+++++++++++++++driver_cost")
