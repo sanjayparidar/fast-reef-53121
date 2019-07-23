@@ -118,7 +118,7 @@ router.get('/delete_order/:order_id',(req,res)=>{
             })
         }
         else{
-            res.status(400).json("delivery is already done unable to cancel");
+            res.status(400).json({status:"delivery is already done unable to cancel"});
         }
     }).catch(err=>res.status(200).json({json:"This order is still not accepted y driver"}))
   
