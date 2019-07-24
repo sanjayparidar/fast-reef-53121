@@ -39,8 +39,14 @@ router.post('/check_sender_otp',get_token,(req,res)=>{
                         })
                     })
                 }
-                else
-                    res.status(401).json({msg:"OTP did not match try again",response:"2"});
+                else{
+                    if(req.body.show===false){
+                         res.send("no show")
+                    }else{
+                         res.status(401).json({msg:"OTP did not match try again",response:"2"});
+                       }
+                  
+                }
             }
         }).catch(err=>{
             console.log("31 Services.js "+err);
