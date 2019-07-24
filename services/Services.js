@@ -60,20 +60,20 @@ router.post('/check_sender_otp',get_token,(req,res)=>{
                                       
                                     console.log("hello2")
                                   if(user.CurrentStatus<2){
-                                    Order.findOneAndUpdate({Order_id:req.body.Order_id},{CurrentStatus:4}).then(user=>{
+                                    Order.findOneAndUpdate({Order_id:req.body.Order_id},{CurrentStatus:5}).then(user=>{
                                     const resp1=user;
-                                    console.log(resp1.Charge_id,"+++++++++++sssssssssss+++++++++++")
-                                    stripe.refunds.create({
-                                    charge:resp1.Charge_id,
-                                    amount:resp1.Price*control/100
-                                  }).then(refund=>{
-                                    console.log(refund);
+                                    // console.log(resp1.Charge_id,"+++++++++++sssssssssss+++++++++++")
+                                //     stripe.refunds.create({
+                                //     charge:resp1.Charge_id,
+                                //     amount:resp1.Price*control/100
+                                //   }).then(refund=>{
+                                //     console.log(refund);
                                     
-                                    res.status(200).json({res:"1",msg:"successfully cancelled orer"});
-                                  }).catch(err=>{
-                                    console.log(err);
-                                    res.status(400).json({res:"2",msg:"error in refunding"});
-                                   })
+                                //     res.status(200).json({res:"1",msg:"successfully cancelled orer"});
+                                //   }).catch(err=>{
+                                //     console.log(err);
+                                //     res.status(400).json({res:"2",msg:"error in refunding"});
+                                //    })
                                   
                                   }).catch(err=>{
                                     console.log(err)

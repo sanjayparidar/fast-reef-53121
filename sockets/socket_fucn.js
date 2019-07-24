@@ -33,7 +33,7 @@ function connection(port){
                 console.log(res.data);
             });
             axios.get(`${admin_link}/driver/driver_cost/driver`).then(user=>{
-                
+            
                 
             var deriver_cost=user.data[0].driver_cost;
         
@@ -74,7 +74,7 @@ function connection(port){
             db.G_Longitude=data.G_Longitude;
             db.R_Latitude=data.R_Latitude;
             db.R_Longitude=data.R_Longitude;
-            db.Charge_id=data.Charge_id;
+            
             db.save().then(user=>{
                 notify_user(user,`Your Order was accepted by ${user.Name} is on his way.Contact him on ${user.Phone}`);
                console.log("40 func"+user);
