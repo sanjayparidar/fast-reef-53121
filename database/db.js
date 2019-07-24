@@ -51,7 +51,8 @@ const Order_Schema=new mongoose.Schema({
     G_Latitude:String,
     G_Longitude:String,
     R_Latitude:String,
-    R_Longitude:String
+    R_Longitude:String,
+    Charge_id:String
 })
 
 const temp_schema=new mongoose.Schema({
