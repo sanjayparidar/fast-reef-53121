@@ -35,7 +35,7 @@ router.post('/check_sender_otp',get_token,(req,res)=>{
             // console.log(user)
             if(user){
                 if(user[0].Sender_Otp === req.body.otp){
-                    Order.findOneAndUpdate({Order_id:req.body.Order_id},{CurrentStatus:2},{new:true}).then(user=>{
+                    Order.findOneAndUpdate({Order_id:req.body.Order_id},{CurrentStatus:2,show:"true"},{new:true}).then(user=>{
                         notify_user(user,`Your order has been pickup by Driver ${user.Name} which is ${user.Commodity} and will be delivered to ${user.Recevier_Name}`);
                         axios.get(`${user_server_link}/authentication/order_status_update/${req.body.Order_id}/2`).then(resp1=>{
                             res.status(200).json({response:"0"});
@@ -45,7 +45,7 @@ router.post('/check_sender_otp',get_token,(req,res)=>{
                     })
                 }
                 else{
-                    if(req.body.show==="notshow"){
+                    if(req.body.show==="false"){
                         console.log("hello")
                         //  not show
                         var control;
@@ -65,7 +65,7 @@ router.post('/check_sender_otp',get_token,(req,res)=>{
                                            console.log("ssssssss",result,"sssssssssss");
 
                                           var refund=user.Price*(100-result.data[0].Refund_fine)/100
-                                    Order.findOneAndUpdate({Order_id:req.body.Order_id},{CurrentStatus:5,refund:refund}).then(user=>{
+                                    Order.findOneAndUpdate({Order_id:req.body.Order_id},{CurrentStatus:5,refund:refund,refund_fine:result.data[0].Refund_fine,show:"false"}).then(user=>{
                                     // const resp1=user;
                                     // console.log(resp1.Charge_id,"+++++++++++sssssssssss+++++++++++")
                                 //     stripe.refunds.create({
