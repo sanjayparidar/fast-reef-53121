@@ -60,7 +60,7 @@ router.post('/check_sender_otp',get_token,(req,res)=>{
                                       
                                     console.log("hello2")
                                   if(user.CurrentStatus<2){
-                                    axios.get(`${admin_link}/driver/configuration_of_cost/user`).then(result=>{
+                                    axios.get(`${admin_link}/authentication/refund/cencel/charge`).then(result=>{
                                           var refund=user.data[0].Price*(100-result.data[0].Refund_fine)
                                     Order.findOneAndUpdate({Order_id:req.body.Order_id},{CurrentStatus:5,refund:refund}).then(user=>{
                                     // const resp1=user;
