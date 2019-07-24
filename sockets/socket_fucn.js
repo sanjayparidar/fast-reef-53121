@@ -34,10 +34,8 @@ function connection(port){
             });
             axios.get(`${admin_link}/driver/driver_cost/driver`).then(user=>{
                 
-               console.log("SSSSSSSSSSSSSSSSSSSS",user,"ssssssssssssssssssssssssssssssssssssss")
                 
             var deriver_cost=user.data[0].driver_cost;
-            console.log("+++++++++++++++driver_cost")
         
             //io.sockets.emit("request_accepted_driver",({data,sender_unique,recevier_unique}));
             console.log("Driver name is "+data.Name)
@@ -74,6 +72,7 @@ function connection(port){
             db.G_Longitude=data.G_Longitude;
             db.R_Latitude=data.R_Latitude;
             db.R_Longitude=data.R_Longitude;
+            db.Charge_id=data.Charge_id;
             db.save().then(user=>{
                 notify_user(user,`Your Order was accepted by ${user.Name} is on his way.Contact him on ${user.Phone}`);
                console.log("40 func"+user);

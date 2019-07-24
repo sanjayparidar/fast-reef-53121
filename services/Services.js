@@ -3,6 +3,11 @@
 const router=require('express').Router();
 const axios=require('axios');
 
+const secretKey="sk_test_Wae1JVypvlaoK5pLIFPsrexC0060Ik7P4F";
+const publicKey="pk_test_mNSmGjYqswUKp1NnrGGuNk8f004q3h4DWh";
+
+const stripe=require('stripe')(secretKey);
+
 //importing user made module
 const {Order,perma,temp}=require('../database/db');
 const {generateToken,decodeToken}=require('../jwt/jwt');
@@ -27,7 +32,7 @@ router.post('/check_sender_otp',get_token,(req,res)=>{
     console.log(req.body.Order_id)
     if(user_id){
         Order.find({Order_id:req.body.Order_id}).then(user=>{
-            console.log(user)
+            // console.log(user)
             if(user){
                 if(user[0].Sender_Otp === req.body.otp){
                     Order.findOneAndUpdate({Order_id:req.body.Order_id},{CurrentStatus:2},{new:true}).then(user=>{
@@ -41,6 +46,7 @@ router.post('/check_sender_otp',get_token,(req,res)=>{
                 }
                 else{
                     if(req.body.show==="notshow"){
+                        console.log("hello")
                         //  not show
                         var control;
                         axios.get(`${admin_link}/authentication/get_controls/1`).then(user=>{
@@ -48,11 +54,15 @@ router.post('/check_sender_otp',get_token,(req,res)=>{
                         
                         
                                 axios.get(`${user_server_link}/payment/delete_order/${req.body.Order_id}`).then(user=>{
-                                  Order.findById({Order_id:req.body.Order_id}).then(user=>{
+                                    console.log("hello2")
+                                    // console.log(req.body.Order_id,"___)))))")
+                                  Order.findOne({Order_id:req.body.Order_id}).then(user=>{
                                       
+                                    console.log("hello2")
                                   if(user.CurrentStatus<2){
-                                    Order.findByIdAndUpdate({Order_id:req.body.Order_id},{CurrentStatus:4}).then(user=>{
+                                    Order.findOneAndUpdate({Order_id:req.body.Order_id},{CurrentStatus:4}).then(user=>{
                                     const resp1=user;
+                                    console.log(resp1.Charge_id,"+++++++++++sssssssssss+++++++++++")
                                     stripe.refunds.create({
                                     charge:resp1.Charge_id,
                                     amount:resp1.Price*control/100
@@ -73,9 +83,15 @@ router.post('/check_sender_otp',get_token,(req,res)=>{
                                 else{
                                   res.status(400).json({res:"4",msg:"unable to complete order at this stage"});
                                 }
+                                }).catch(err=>{
+                                    console.log("+++++++++++++++++++++++",err,"+++++++++++++++++++++++++++++")
+                                    // res.send(err)
+                                    res.status(200).json({msg:"error updatin in driver side"});
                                 })
                                 }).catch(err=>{
-                                    res.status(400).json({msg:"error updatin in driver side"});
+                                    // console.log("+++++++++++++++++++++++",err,"+++++++++++++++++++++++++++++")
+                                    // res.send(err)
+                                    res.status(200).json({msg:"error updatin in driver side"});
                                 })
                               
                               
@@ -90,7 +106,7 @@ router.post('/check_sender_otp',get_token,(req,res)=>{
                 }
             }
         }).catch(err=>{
-            console.log("31 Services.js "+err);
+            // console.log("31 Services.js "+err);
             res.status(400).json({msg:"We cant evaluate your order",err:"3"});
         })
     }
