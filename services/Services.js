@@ -69,7 +69,7 @@ router.post('/check_sender_otp',get_token,(req,res)=>{
                                 //   }).then(refund=>{
                                 //     console.log(refund);
                                     
-                                //     res.status(200).json({res:"1",msg:"successfully cancelled orer"});
+                                    res.status(200).json({res:"1",msg:"successfully cancelled orer"});
                                 //   }).catch(err=>{
                                 //     console.log(err);
                                 //     res.status(400).json({res:"2",msg:"error in refunding"});
