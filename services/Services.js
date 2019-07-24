@@ -61,7 +61,10 @@ router.post('/check_sender_otp',get_token,(req,res)=>{
                                     console.log("hello2")
                                   if(user.CurrentStatus<2){
                                     axios.get(`${admin_link}/authentication/refund/cencel/charge`).then(result=>{
-                                          var refund=user.data[0].Price*(100-result.data[0].Refund_fine)
+                                           
+                                           console.log("ssssssss",result,"sssssssssss");
+
+                                          var refund=user.Price*(100-result.data[0].Refund_fine)/100
                                     Order.findOneAndUpdate({Order_id:req.body.Order_id},{CurrentStatus:5,refund:refund}).then(user=>{
                                     // const resp1=user;
                                     // console.log(resp1.Charge_id,"+++++++++++sssssssssss+++++++++++")
