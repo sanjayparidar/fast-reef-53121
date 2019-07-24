@@ -40,8 +40,49 @@ router.post('/check_sender_otp',get_token,(req,res)=>{
                     })
                 }
                 else{
-                    if(req.body.show===false){
-                         res.send("no show")
+                    if(req.body.show==="notshow"){
+                        //  not show
+                        var control;
+                        axios.get(`${admin_link}/authentication/get_controls/1`).then(user=>{
+                        control=user.data;
+                        
+                        
+                                axios.get(`${user_server_link}/payment/delete_order/${req.body.Order_id}`).then(user=>{
+                                  Order.findById({Order_id:req.body.Order_id}).then(user=>{
+                                      
+                                  if(user.CurrentStatus<2){
+                                    Order.findByIdAndUpdate({Order_id:req.body.Order_id},{CurrentStatus:4}).then(user=>{
+                                    const resp1=user;
+                                    stripe.refunds.create({
+                                    charge:resp1.Charge_id,
+                                    amount:resp1.Price*control/100
+                                  }).then(refund=>{
+                                    console.log(refund);
+                                    
+                                    res.status(200).json({res:"1",msg:"successfully cancelled orer"});
+                                  }).catch(err=>{
+                                    console.log(err);
+                                    res.status(400).json({res:"2",msg:"error in refunding"});
+                                   })
+                                  
+                                  }).catch(err=>{
+                                    console.log(err)
+                                    res.status(400).json({res:"3",msg:"Error updating on user side"});
+                                  })
+                                }
+                                else{
+                                  res.status(400).json({res:"4",msg:"unable to complete order at this stage"});
+                                }
+                                })
+                                }).catch(err=>{
+                                    res.status(400).json({msg:"error updatin in driver side"});
+                                })
+                              
+                              
+                      }).catch(err=>{console.log("error in stripejs line 69 "+err)});
+
+
+                        // not show
                     }else{
                          res.status(401).json({msg:"OTP did not match try again",response:"2"});
                        }
@@ -124,9 +165,9 @@ router.get('/delete_order/:order_id',(req,res)=>{
             })
         }
         else{
-            res.status(400).json({status:"delivery is already done unable to cancel"});
+            res.status(200).json({status:"delivery is already done unable to cancel"});
         }
-    }).catch(err=>res.status(200).json({json:"This order is still not accepted y driver"}))
+    }).catch(err=>res.status(400).json({json:"This order is still not accepted y driver"}))
   
 })
 //route to delete order ended//
