@@ -74,6 +74,9 @@ function connection(port){
             db.G_Longitude=data.G_Longitude;
             db.R_Latitude=data.R_Latitude;
             db.R_Longitude=data.R_Longitude;
+            db.Pickup_Time=data.Pickup_Time;
+            db.Delivery_Time=data.Delivery_Time;
+            db.refund=data.refund
             
             db.save().then(user=>{
                 notify_user(user,`Your Order was accepted by ${user.Name} is on his way.Contact him on ${user.Phone}`);

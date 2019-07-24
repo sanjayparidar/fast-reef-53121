@@ -52,7 +52,10 @@ const Order_Schema=new mongoose.Schema({
     G_Longitude:String,
     R_Latitude:String,
     R_Longitude:String,
-    Charge_id:String
+    Charge_id:String,
+    Pickup_Time:String,
+    Delivery_Time:String,
+    refund:String
 })
 
 const temp_schema=new mongoose.Schema({

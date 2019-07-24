@@ -60,8 +60,10 @@ router.post('/check_sender_otp',get_token,(req,res)=>{
                                       
                                     console.log("hello2")
                                   if(user.CurrentStatus<2){
-                                    Order.findOneAndUpdate({Order_id:req.body.Order_id},{CurrentStatus:5}).then(user=>{
-                                    const resp1=user;
+                                    axios.get(`${admin_link}/driver/configuration_of_cost/user`).then(result=>{
+                                          var refund=user.data[0].Price*(100-result.data[0].Refund_fine)
+                                    Order.findOneAndUpdate({Order_id:req.body.Order_id},{CurrentStatus:5,refund:refund}).then(user=>{
+                                    // const resp1=user;
                                     // console.log(resp1.Charge_id,"+++++++++++sssssssssss+++++++++++")
                                 //     stripe.refunds.create({
                                 //     charge:resp1.Charge_id,
@@ -78,6 +80,10 @@ router.post('/check_sender_otp',get_token,(req,res)=>{
                                   }).catch(err=>{
                                     console.log(err)
                                     res.status(400).json({res:"3",msg:"Error updating on user side"});
+                                  })
+                                }).catch(err=>{
+                                    console.log(err)
+                                    res.status(400).json({res:"3",msg:"Error updating on on admin side"});
                                   })
                                 }
                                 else{
