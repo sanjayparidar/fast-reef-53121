@@ -7,6 +7,11 @@ const {local_link,user_server_link}=require('../urls/links');
 const nodemailer=require('nodemailer');
 const ejs=require('ejs');
 const axios=require('axios');
+var path = require('path');
+var fs = require('fs');
+var changename = require("../helper/changefilename");
+
+
 
 //developer made function import
 const token=require('../jwt/jwt');
@@ -161,7 +166,8 @@ router.get('/verification/:token',(req,res)=>{
                     db. Flag=user.Flag
                     db.Account_Id=user.Account_Id;
                     db. Date=new Date()
-                    db.response="1"
+                    db.response="1";
+                    db.image="https://banner2.kisspng.com/20180425/zye/kisspng-computer-icons-avatar-user-login-5ae149b20c8348.1680096815247139060513.jpg"
                     db. save().then(user=>{
                         res.render("thank");
                     })
@@ -335,6 +341,34 @@ router.get('/logout',get_token,(req,res)=>{
 	}).catch(err=>{
 		res.status(400).json({response:"2"});
 	})
+})
+
+router.post("/profile/update",function(req,res){
+    const user_id=token.decodeToken(req.token).user;
+    if(user_id){
+        var id = req.params.id;
+	
+        if(req.files)
+        {
+        
+            var file = req.files.image;
+            var newname = changename(file.name);
+            var filepath = path.resolve("public/userimage/"+newname);
+            file.mv(filepath);
+            req.body.image = newname;
+            // var oldfilepath = path.resolve("public/product_image/"+image);
+            // fs.unlinkSync(oldfilepath);
+    
+        }else{
+            delete req.body.image
+        }
+        perma.findByIdAndUpdate({_id:user_id},req.body,{new:true}).then(user=>{
+            // res.redirect("/admin_viewproduct");
+            res.status(200).res({response:"1"});
+        }).catch(err=>{
+            res.status(400).json({response:"2"});
+        })
+      }
 })
 
 

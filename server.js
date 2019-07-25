@@ -7,6 +7,8 @@ const mongoose=require('mongoose');
 const MongoStore=require('connect-mongo')(session);
 const cookieparser=require('cookie-parser');
 const cron=require('node-cron');
+var upload = require('express-fileupload');
+
 
 //importing from developer made folder
 const {auth_route}=require('./authentication/authenticate');
@@ -15,6 +17,9 @@ const {upload_route}=require('./photo_upload/photo_upload');
 const sck=require('./sockets/socket_fucn');
 const {mongourl}=require('./urls/links')
 
+
+app.use(express.static(__dirname+"/public"));
+app.use(upload());
 
 //mongoose connection
 mongoose.connect(mongourl,{useNewUrlParser:true,useCreateIndex:true},(err,db)=>{

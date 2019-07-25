@@ -83,7 +83,8 @@ const perma_schema=new mongoose.Schema({
     Date:{type:Date},
     Account_Id:String,
     response:{type:String},
-    History:[{Order_id:String,CurrentStatus:{type:Number,default:0}}]
+    History:[{Order_id:String,CurrentStatus:{type:Number,default:0}}],
+    image:{type:String}
 })
 
 const temp_model=mongoose.model('temp',temp_schema);
