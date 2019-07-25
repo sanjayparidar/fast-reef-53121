@@ -369,7 +369,7 @@ router.post("/profile/update",get_token,function(req,res){
      if(req.body.image!=""){
         const imageNew = Date.now()+".png"; 
 
-        const pathsave = path.resolve("public/userimage/"+imageNew);
+        const pathsave = path.resolve("userimage/"+imageNew);
          
         const imgdata = req.body.image;
         
@@ -381,6 +381,7 @@ router.post("/profile/update",get_token,function(req,res){
      }else{
         delete req.body.image
      }
+     console.log(req.body)
      perma.findByIdAndUpdate({_id:user_id},req.body,{new:true}).then(user=>{
                 // res.redirect("/admin_viewproduct");
                 res.status(200).json({response:"1"});
