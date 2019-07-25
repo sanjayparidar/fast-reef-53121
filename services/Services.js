@@ -62,9 +62,9 @@ router.post('/check_sender_otp',get_token,(req,res)=>{
                                 axios.get(`${admin_link}/authentication/refund/cencel/charge`).then(result=>{
                                     var refund=user.Price*(100-result.data[0].Refund_fine)/100
                                 axios.get(`${user_server_link}/payment/delete_order`,{Order_id:req.body.Order_id,CurrentStatus:5,refund:refund,refund_fine:result.data[0].Refund_fine,show:"false"}).then(user=>{
-                           
+                                                   console.log("+++++++++++ankit____________========================")
                                     }).catch(err=>{
-                                        // console.log("+++++++++++++++++++++++",err,"+++++++++++++++++++++++++++++")
+                                        console.log("+++++++++++++++++++++++",err,"+++++++++++++++++++++++++++++")
                                         // res.send(err)
                                         res.status(200).json({msg:"error updatin in driver side"});
                                     })
