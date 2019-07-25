@@ -302,7 +302,7 @@ router.get('/user_details',get_token,(req,res)=>{
             if(user){
                 if(user.image!=""){
                     var host = req.get('host');
-                    var image="https://"+host+"/public/userimage/"+user.image;
+                    var image="https://"+host+"/userimage/"+user.image;
                     user.image=image;
                     res.status(200).json(user);
 
