@@ -178,6 +178,7 @@ router.get('/verification/:token',(req,res)=>{
 
 //logging in user
 router.post('/login',(req,res)=>{
+    console.log("hello")
     perma.findOne({Email:req.body.Email}).then(user=>{
         if(req.body.Password === user.Password)
             {
@@ -343,11 +344,11 @@ router.get('/logout',get_token,(req,res)=>{
 	})
 })
 
-router.post("/profile/update",function(req,res){
+router.post("/profile/update",get_token,function(req,res){
+
     const user_id=token.decodeToken(req.token).user;
     if(user_id){
-        var id = req.params.id;
-	
+	      console.log(user_id)
         if(req.files)
         {
         
@@ -364,10 +365,14 @@ router.post("/profile/update",function(req,res){
         }
         perma.findByIdAndUpdate({_id:user_id},req.body,{new:true}).then(user=>{
             // res.redirect("/admin_viewproduct");
-            res.status(200).res({response:"1"});
+            res.status(200).json({response:"1"});
         }).catch(err=>{
+            console.log(err)
             res.status(400).json({response:"2"});
         })
+      }else{
+        res.status(200).res({response:"3",msg:"token require"});
+
       }
 })
 
