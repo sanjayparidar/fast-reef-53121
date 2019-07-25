@@ -167,7 +167,7 @@ router.get('/verification/:token',(req,res)=>{
                     db.Account_Id=user.Account_Id;
                     db. Date=new Date()
                     db.response="1";
-                    db.image="https://banner2.kisspng.com/20180425/zye/kisspng-computer-icons-avatar-user-login-5ae149b20c8348.1680096815247139060513.jpg"
+                    db.image="";
                     db. save().then(user=>{
                         res.render("thank");
                     })
@@ -298,8 +298,22 @@ router.get('/user_details',get_token,(req,res)=>{
     const user_id=token.decodeToken(req.token).user
     if(user_id){
         perma.findById({_id:user_id},{ Password:false}).then(user=>{
-            if(user)
+            console.log(user)
+            if(user){
+                if(user.image!=""){
+                    var host = req.get('host');
+                    var image=host+user.image;
+                    user.image=image;
+                    res.status(200).json(user);
+
+                }else{
+                 user.image="https://banner2.kisspng.com/20180425/zye/kisspng-computer-icons-avatar-user-login-5ae149b20c8348.1680096815247139060513.jpg"
+                    
                 res.status(200).json(user);
+
+                }
+            
+            }
             else
                 res.status(200).json({err:"1"});
         }).catch(err=>{
