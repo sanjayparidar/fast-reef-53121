@@ -369,7 +369,7 @@ router.post("/profile/update",get_token,function(req,res){
      if(req.body.image!=""){
         const imageNew = Date.now()+".png"; 
 
-        const pathsave = path.resolve("userimage/"+imageNew);
+        const pathsave = path.resolve("public/userimage/"+imageNew);
          
         const imgdata = req.body.image;
         
