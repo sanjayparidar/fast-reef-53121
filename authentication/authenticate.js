@@ -362,32 +362,39 @@ router.post("/profile/update",get_token,function(req,res){
 
     const user_id=token.decodeToken(req.token).user;
     if(user_id){
-	      console.log(user_id)
-        if(req.files)
-        {
+        // var img = new Buffer(req.body.image, 'base64');
         
-            var file = req.files.image;
-            var newname = changename(file.name);
-            var filepath = path.resolve("public/userimage/"+newname);
-            file.mv(filepath);
-            req.body.image = newname;
-            // var oldfilepath = path.resolve("public/product_image/"+image);
-            // fs.unlinkSync(oldfilepath);
-    
-        }else{
-            delete req.body.image
-        }
-        perma.findByIdAndUpdate({_id:user_id},req.body,{new:true}).then(user=>{
-            // res.redirect("/admin_viewproduct");
-            res.status(200).json({response:"1"});
-        }).catch(err=>{
-            console.log(err)
-            res.status(400).json({response:"2"});
-        })
-      }else{
-        res.status(200).res({response:"3",msg:"token require"});
+// console.log(img)    
 
-      }
+     if(req.body.image!=""){
+        const imageNew = Date.now()+".png"; 
+
+        const pathsave = path.resolve("public/userimage/"+imageNew);
+         
+        const imgdata = req.body.image;
+        
+        const base64Data = imgdata.replace(/^data:([A-Za-z-+/]+);base64,/, '');
+        
+        fs.writeFileSync(pathsave, base64Data,  {encoding: 'base64'});
+        req.body.image=imageNew;
+
+     }else{
+        delete req.body.image
+     }
+     perma.findByIdAndUpdate({_id:user_id},req.body,{new:true}).then(user=>{
+                // res.redirect("/admin_viewproduct");
+                res.status(200).json({response:"1"});
+            }).catch(err=>{
+                console.log(err)
+                res.status(400).json({response:"2"});
+            })
+          }else{
+              res.status(200).json({response:3})
+          }
+          
+
+    //  
+   
 })
 
 
