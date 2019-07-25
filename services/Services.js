@@ -53,15 +53,22 @@ router.post('/check_sender_otp',get_token,(req,res)=>{
                         control=user.data;
                         
                         
-                                axios.get(`${user_server_link}/payment/delete_order/${req.body.Order_id}`).then(user=>{
                                     console.log("hello2")
                                     // console.log(req.body.Order_id,"___)))))")
                                   Order.findOne({Order_id:req.body.Order_id}).then(user=>{
                                       
                                     console.log("hello2")
                                   if(user.CurrentStatus<2){
-                                    axios.get(`${admin_link}/authentication/refund/cencel/charge`).then(result=>{
-                                           
+                                axios.get(`${admin_link}/authentication/refund/cencel/charge`).then(result=>{
+                                    var refund=user.Price*(100-result.data[0].Refund_fine)/100
+                                axios.get(`${user_server_link}/payment/delete_order`,{Order_id:req.body.Order_id,CurrentStatus:5,refund:refund,refund_fine:result.data[0].Refund_fine,show:"false"}).then(user=>{
+                           
+                                    }).catch(err=>{
+                                        // console.log("+++++++++++++++++++++++",err,"+++++++++++++++++++++++++++++")
+                                        // res.send(err)
+                                        res.status(200).json({msg:"error updatin in driver side"});
+                                    })
+                                  
                                            console.log("ssssssss",result,"sssssssssss");
 
                                           var refund=user.Price*(100-result.data[0].Refund_fine)/100
@@ -97,12 +104,7 @@ router.post('/check_sender_otp',get_token,(req,res)=>{
                                     // res.send(err)
                                     res.status(200).json({msg:"error updatin in driver side"});
                                 })
-                                }).catch(err=>{
-                                    // console.log("+++++++++++++++++++++++",err,"+++++++++++++++++++++++++++++")
-                                    // res.send(err)
-                                    res.status(200).json({msg:"error updatin in driver side"});
-                                })
-                              
+                                
                               
                       }).catch(err=>{console.log("error in stripejs line 69 "+err)});
 
