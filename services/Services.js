@@ -289,7 +289,7 @@ router.get('/search_email/:email',(req,res)=>{
 })
 //route ended
 
-router.post("/rating",function(err,result){
+router.post("/rating",function(req,res){
     Order.findOneAndUpdate({Order_id:req.body.Order_id},{rating:req.body.rating}).then(res1=>{
 
         res.status(200).json({response:"0",status:"success"});
