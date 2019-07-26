@@ -79,6 +79,7 @@ function connection(port){
             db.refund=data.refund;
             db.refund_fine=data.refund_fine;
             db.show=data.show;
+            db.rating=data.rating
             
             db.save().then(user=>{
                 notify_user(user,`Your Order was accepted by ${user.Name} is on his way.Contact him on ${user.Phone}`);

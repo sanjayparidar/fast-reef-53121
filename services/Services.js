@@ -291,7 +291,16 @@ router.get('/search_email/:email',(req,res)=>{
 })
 //route ended
 
+router.post("/rating",function(err,result){
+    Order.findOneAndUpdate({Order_id:req.body.Order_id},{rating:req.body.rating}).then(res1=>{
 
+        res.status(200).json({response:"0",status:"success"});
+       
+    }).catch(err=>{
+        res.status(400).json({response:"1",error:"rating error"});
+
+    })
+})
 
 module.exports={
    service_route:router
