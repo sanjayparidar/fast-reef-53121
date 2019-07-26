@@ -413,12 +413,12 @@ router.get("/driver_total",get_token,function(req,res){
          var obj={ }
          obj.total_driver_earning=total_driver_earning;
          obj.total_driver_order=total_driver_order;
-         res.status(200).json({response:0,data:obj})
+         res.status(200).json(obj)
         }else{
             var obj={ }
          obj.total_driver_earning=0;
          obj.total_driver_order=0;
-         res.status(200).json({response:0,data:obj})
+         res.status(200).json(obj)
         }     
         }).catch(err=>{console.log("261 err authenticate.js "+err)});
         
