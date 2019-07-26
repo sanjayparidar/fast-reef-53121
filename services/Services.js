@@ -38,7 +38,7 @@ router.post('/check_sender_otp',get_token,(req,res)=>{
                     Order.findOneAndUpdate({Order_id:req.body.Order_id},{CurrentStatus:2,show:"true"},{new:true}).then(user=>{
                         notify_user(user,`Your order has been pickup by Driver ${user.Name} which is ${user.Commodity} and will be delivered to ${user.Recevier_Name}`);
                         axios.get(`${user_server_link}/authentication/order_status_update/${req.body.Order_id}/2`).then(resp1=>{
-                            res.status(200).json({response:"0"});
+                            res.status(200).json({res:"0"});
                         }).catch(err=>{
                             res.status(400).json({response:"error updating your status",response:"0"});
                         })
@@ -62,9 +62,7 @@ router.post('/check_sender_otp',get_token,(req,res)=>{
                                 axios.get(`${admin_link}/authentication/refund/cencel/charge`).then(result=>{
                                     var refund=user.Price*(100-result.data[0].Refund_fine)/100
                                 axios.post(`${user_server_link}/payment/delete_order`,{Order_id:req.body.Order_id,CurrentStatus:5,refund:refund,refund_fine:result.data[0].Refund_fine,show:"false"}).then(user=>{
-                                                   console.log("+++++++++++ankit____________========================")
                                     }).catch(err=>{
-                                        console.log("+++++++++++++++++++++++",err,"+++++++++++++++++++++++++++++")
                                         // res.send(err)
                                         res.status(200).json({msg:"error updatin in driver side"});
                                     })
