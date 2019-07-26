@@ -58,7 +58,8 @@ const Order_Schema=new mongoose.Schema({
     refund:String,
     refund_fine:String,
     show:String,
-    rating:String
+    rating:String,
+    comment:String
 })
 
 const temp_schema=new mongoose.Schema({
