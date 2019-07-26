@@ -298,7 +298,10 @@ router.post("/rating",function(req,res){
         res.status(400).json({response:"1",error:"rating error"});
 
     })
-})
+});
+
+
+
 
 module.exports={
    service_route:router

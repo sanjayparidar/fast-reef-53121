@@ -397,6 +397,38 @@ router.post("/profile/update",get_token,function(req,res){
     //  
    
 })
+router.get("/driver_total",function(req,res){
+    const user_id=token.decodeToken(req.token).user;
+    console.log(user_id)
+    if(user_id){
+        Order.find({Driver_id:user_id}).then(user=>{
+            if(user!=null){
+             function count(array, key) {
+                return array.reduce(function (r, a) {
+                    return parseInt(r) + parseInt(a[key]);
+                }, 0);
+            }
+         total_driver_earning= count(user,'Earning');
+         total_driver_order=user.length
+         var obj={ }
+         obj.total_driver_earning=total_driver_earning;
+         obj.total_driver_order=total_driver_order;
+         res.status(200).json({response:0,data:obj})
+        }else{
+            var obj={ }
+         obj.total_driver_earning=0;
+         obj.total_driver_order=0;
+         res.status(200).json({response:0,data:obj})
+        }     
+        }).catch(err=>{console.log("261 err authenticate.js "+err)});
+        
+    }
+    else
+        res.status(401).json({err:"1"});
+
+
+
+})
 
 
 module.exports={
