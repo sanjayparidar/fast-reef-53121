@@ -184,6 +184,7 @@ const order_complete=(Order_id)=>{
 //route to delete the order when a user cancels a order//
 router.get('/delete_order/:order_id',(req,res)=>{
     Order.findOne({Order_id:req.params.order_id}).then(user1=>{
+         console.log("+++++++++++++++++++++++++++++++++",user1,"++++++++++++___________SSSSSSSSSSS")
         if(user1.CurrentStatus===1){
             Order.findOneAndUpdate({Order_id:req.params.order_id},{CurrentStatus:4}).then(user=>{
                 res.status(200).json({response:"1"});
