@@ -397,7 +397,7 @@ router.post("/profile/update",get_token,function(req,res){
     //  
    
 })
-router.get("/driver_total",function(req,res){
+router.get("/driver_total",get_token,function(req,res){
     const user_id=token.decodeToken(req.token).user;
     console.log(user_id)
     if(user_id){
