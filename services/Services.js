@@ -185,7 +185,8 @@ const order_complete=(Order_id)=>{
 router.get('/delete_order/:order_id',(req,res)=>{
     Order.findOne({Order_id:req.params.order_id}).then(user1=>{
          console.log("+++++++++++++++++++++++++++++++++",user1,"++++++++++++___________SSSSSSSSSSS")
-        if(user1.CurrentStatus===1){
+          if(user1!=null){
+         if(user1.CurrentStatus===1){
             Order.findOneAndUpdate({Order_id:req.params.order_id},{CurrentStatus:4}).then(user=>{
                 res.status(200).json({response:"1"});
             }).catch(err=>{
@@ -195,6 +196,7 @@ router.get('/delete_order/:order_id',(req,res)=>{
         else{
             res.status(200).json({status:"delivery is already done unable to cancel"});
         }
+    }
     }).catch(err=>res.status(400).json({json:"This order is still not accepted y driver"}))
   
 })
