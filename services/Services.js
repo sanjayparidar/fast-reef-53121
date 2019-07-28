@@ -35,7 +35,7 @@ router.post('/check_sender_otp',get_token,(req,res)=>{
             // console.log(user)
             if(user){
                 if(user[0].Sender_Otp === req.body.otp){
-                    Order.findOneAndUpdate({Order_id:req.body.Order_id},{CurrentStatus:2,show:"true"},{new:true}).then(user=>{
+                    Order.findOneAndUpdate({Order_id:req.body.Order_id},{CurrentStatus:2,show:"true",},{new:true}).then(user=>{
                         notify_user(user,`Your order has been pickup by Driver ${user.Name} which is ${user.Commodity} and will be delivered to ${user.Recevier_Name}`);
                         axios.get(`${user_server_link}/authentication/order_status_update/${req.body.Order_id}/2`).then(resp1=>{
                             res.status(200).json({res:"0"});

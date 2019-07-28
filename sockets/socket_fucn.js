@@ -36,6 +36,7 @@ function connection(port){
             
                 
             var deriver_cost=user.data[0].driver_cost;
+            var driver_earning=Math.round(data.Price*deriver_cost)/100;
         
             //io.sockets.emit("request_accepted_driver",({data,sender_unique,recevier_unique}));
             console.log("Driver name is "+data.Name)
@@ -81,6 +82,11 @@ function connection(port){
             db.show=data.show;
             db.rating=data.rating;
             db.comment=data.comment;
+            db.distance=data.distance;
+            db.partnercommission=data.deriver_cost;
+            
+            db.adminearning=data.Price-driver_earning;
+
             
             db.save().then(user=>{
                 notify_user(user,`Your Order was accepted by ${user.Name} is on his way.Contact him on ${user.Phone}`);
