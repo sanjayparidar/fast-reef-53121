@@ -85,6 +85,7 @@ function connection(port){
             db.distance=data.distance;
             db.partnercommission=deriver_cost;
             db.farepermile=data.farepermile;
+        
             db.adminearning=data.Price-driver_earning;
 
             
