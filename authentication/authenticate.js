@@ -376,8 +376,8 @@ router.post("/profile/update",get_token,function(req,res){
         const imgdata = req.body.image;
         
         const base64 = imgdata.replace(/^data:([A-Za-z-+/]+);base64,/, '');
-        var  base64Data = resizebase64(base64); 
-        fs.writeFileSync(pathsave, base64Data,  {encoding: 'base64'});
+        // var  base64Data = resizebase64(base64); 
+        fs.writeFileSync(pathsave, base64,  {encoding: 'base64'});
         req.body.image=imageNew;
 
      }else{
