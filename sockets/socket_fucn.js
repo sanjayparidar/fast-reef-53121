@@ -83,8 +83,8 @@ function connection(port){
             db.rating=data.rating;
             db.comment=data.comment;
             db.distance=data.distance;
-            db.partnercommission=data.deriver_cost;
-            
+            db.partnercommission=deriver_cost;
+            db.farepermile=data.farepermile;
             db.adminearning=data.Price-driver_earning;
 
             
