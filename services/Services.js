@@ -305,10 +305,10 @@ router.post("/rating",function(req,res){
 router.post("/driver_rating",function(req,res){
     Order.find({Driver_id:req.body.driver_id},function(err,result){
         if(err){
-
-        }else{
             
-            if(user!=null){
+        }else{
+               console.log("+++++++++++++++++",result,"ssssssssssssssssssss")
+            if(result!=null){
                 function count(array, key) {
                    return array.reduce(function (r, a) {
                        return parseInt(r) + parseInt(a[key]);
