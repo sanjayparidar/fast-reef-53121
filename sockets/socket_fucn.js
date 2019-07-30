@@ -80,7 +80,7 @@ function connection(port){
             db.refund=data.refund;
             db.refund_fine=data.refund_fine;
             db.show="";
-            db.rating="";
+            db.rating="0";
             db.comment="";
             db.distance=data.distance;
             db.partnercommission=deriver_cost;
