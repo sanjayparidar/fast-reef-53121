@@ -307,7 +307,7 @@ router.post("/driver_rating",function(req,res){
         if(err){
             
         }else{
-               console.log("+++++++++++++++++",result,"ssssssssssssssssssss")
+            //    console.log("+++++++++++++++++",result,"ssssssssssssssssssss")
             if(result!=null){
                 function count(array, key) {
                    return array.reduce(function (r, a) {
@@ -319,6 +319,7 @@ router.post("/driver_rating",function(req,res){
             var avarge_rating=total_rating/total_order
             var obj={ }
             obj.avarge_rating=avarge_rating
+            console.log("+++++++++++++++++",obj,"++++++++++++++++++++++")
             res.status(200).json(obj)
            }else{
                var obj={ }
