@@ -315,7 +315,7 @@ router.post("/driver_rating",function(req,res){
                    }, 0);
                }
           var total_rating= count(result,'rating');
-            var total_order=user.length
+            var total_order=result.length
             var avarge_rating=total_rating/total_order
             var obj={ }
             obj.avarge_rating=avarge_rating
