@@ -86,7 +86,7 @@ function connection(port){
             db.partnercommission=deriver_cost;
             db.farepermile=data.farepermile;
             db.adminearning=data.Price-driver_earning;
-            console.log("SSSSSSSSSSSSSSSS",db,"SSSSSSSSSSSSSSSSSSSSSSSSSSSSS")
+        
             db.save().then(user=>{
                 notify_user(user,`Your Order was accepted by ${user.Name} is on his way.Contact him on ${user.Phone}`);
                console.log("40 func"+user);

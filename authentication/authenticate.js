@@ -147,7 +147,7 @@ router.post('/register',(req,res)=>{
 
 //verifying when user clicks on link on gmail
 router.get('/verification/:token',(req,res)=>{
-        console.log("yes");
+        // console.log("yes");
         const authdata=token.decodeToken(req.params.token);
         if(!authdata){
             res.status(401).json("Not authorised to acces this link");
@@ -158,7 +158,7 @@ router.get('/verification/:token',(req,res)=>{
             else{
                 temp.findOneAndDelete({Email:authdata.user}).then(user=>{
                     const db=new perma
-                    console.log("64"+user.IMEI)
+                    // console.log("64"+user.IMEI)
                     db. device_id=user.device_id
                     db. Name=user.Name
                     db. Password=user.Password
@@ -180,7 +180,7 @@ router.get('/verification/:token',(req,res)=>{
 
 //logging in user
 router.post('/login',(req,res)=>{
-    console.log("hello")
+    // console.log("hello")
     perma.findOne({Email:req.body.Email}).then(user=>{
         if(req.body.Password === user.Password)
             {
