@@ -1,6 +1,7 @@
 const socket=require('socket.io');
 const axios=require('axios');
 const {admin_link}=require('../urls/links');
+var geodist = require('geodist');
 
 
 
@@ -42,7 +43,12 @@ function connection(port){
             console.log("Driver name is "+data.Name)
             io.sockets.emit("this_order_is_accepted_by_driver",{Driver_Name:data.Name,Order_id:data.Order_id,code:"1"});
             console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++",data,"___------------------------------------------------------++++++++++++++++++sssssssssssssssss")
-                
+            var latR=data.R_Latitude;
+            var lonR=data.R_Longitude;
+            var latg=data.G_Latitude;
+            var long=data.G_Longitude;
+            console.log(latR,lonR,latg,long)
+        var distance = geodist({lat: latR, lon: lonR}, {lat: latg, lon: long}) 
             const db=new Order
             db.User_id=data.User_id;
             db.Driver_id=data.Driver_id;
@@ -82,10 +88,10 @@ function connection(port){
             db.show="";
             db.rating="0";
             db.comment="";
-            db.distance=data.distance;
             db.partnercommission=deriver_cost;
             db.farepermile=data.farepermile;
             db.adminearning=data.Price-driver_earning;
+            db.distance=distance;
         
             db.save().then(user=>{
                 notify_user(user,`Your Order was accepted by ${user.Name} is on his way.Contact him on ${user.Phone}`);
