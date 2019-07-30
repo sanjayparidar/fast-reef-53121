@@ -320,7 +320,7 @@ router.post("/driver_rating",function(req,res){
             var obj={ }
             obj.avarge_rating=avarge_rating
             console.log("+++++++++++++++++",obj,"++++++++++++++++++++++")
-            res.status(200).json(obj)
+            res.status(200).json({response:"0",status:"success"})
            }else{
                var obj={ }
             obj.rating=4;
