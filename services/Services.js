@@ -329,6 +329,9 @@ router.post("/driver_rating",function(req,res){
 
 
         }
+    }).catch(err=>{
+        res.status(400).json({response:"1",error:"rating error"});
+
     })
 
 })
