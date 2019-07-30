@@ -16,7 +16,7 @@ function connection(port){
     io=socket(port);
     io.on('connection',(socket)=>{
         connected_socket=socket
-        console.log("made connection");
+        // console.log("made connection");
         //console.log(connected_socket);
         connected_socket.on("request",(data)=>{
             console.log("17 socket_func"+data.Name);
@@ -79,9 +79,9 @@ function connection(port){
             db.Delivery_Time=data.Delivery_Time;
             db.refund=data.refund;
             db.refund_fine=data.refund_fine;
-            db.show=data.show;
-            db.rating=data.rating;
-            db.comment=data.comment;
+            db.show="";
+            db.rating="";
+            db.comment="";
             db.distance=data.distance;
             db.partnercommission=deriver_cost;
             db.farepermile=data.farepermile;
