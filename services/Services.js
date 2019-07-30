@@ -302,6 +302,37 @@ router.post("/rating",function(req,res){
 });
 
 
+router.post("/driver_rating",function(req,res){
+    Order.find({Driver_id:req.body.driver_id,CurrentStatus:3},function(err,result){
+        if(err){
+
+        }else{
+            
+            if(user!=null){
+                function count(array, key) {
+                   return array.reduce(function (r, a) {
+                       return parseInt(r) + parseInt(a[key]);
+                   }, 0);
+               }
+          var total_rating= count(result,'rating');
+            var total_order=user.length
+            var avarge_rating=total_rating/total_order
+            var obj={ }
+            obj.avarge_rating=avarge_rating
+            res.status(200).json(obj)
+           }else{
+               var obj={ }
+            obj.rating=4;
+            res.status(200).json(obj)
+           } 
+
+
+        }
+    })
+
+})
+
+
 
 
 module.exports={
