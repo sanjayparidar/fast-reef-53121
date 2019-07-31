@@ -332,7 +332,12 @@ router.post("/driver_rating",function(req,res){
     });
 
 })
-
+router.get('/order/complete',(req,res)=>{
+    Order.find({CurrentStatus:3}).then(user=>{
+        user.reverse();
+        res.status(200).json(user);
+    })
+})
 
 
 
