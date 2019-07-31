@@ -306,6 +306,7 @@ router.post("/driver_rating",function(req,res){
     Order.find({Driver_id:req.body.driver_id},function(err,result){
         if(err){
             
+            
         }else{
             //    console.log("+++++++++++++++++",result,"ssssssssssssssssssss")
             if(result!=null){
@@ -320,7 +321,7 @@ router.post("/driver_rating",function(req,res){
             var obj={ }
             obj.avarge_rating=avarge_rating
             console.log("+++++++++++++++++",obj,"++++++++++++++++++++++")
-            res.status(200).json({response:"0",status:"success"})
+            res.status(200).json(obj)
            }else{
                var obj={ }
             obj.rating=4;
