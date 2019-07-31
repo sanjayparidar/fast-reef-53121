@@ -30,9 +30,37 @@ function connection(port){
             //             io.to(`${i.socket_id}`).emit("request_accepted_driver",({data,sender_unique,recevier_unique}));
             //     })
             // })
+            Order.find({$and:[{ Driver_id: "5d398754ea115a002480b9c2"}, { CurrentStatus: 3 },{rating:{$gt:0}}]},function(err,result){
+                if(err){
+                    // {Driver_id:req.body.driver_id,CurrentStatus:3,rating:{ $gt:0}}
+                    // [{ color: 'daffodil yellow' }, { color: 'atomic tangerine' }] 
+                }else{
+                    //    console.log("+++++++++++++++++",result,"ssssssssssssssssssss")
+                    if(result!=null){
+                        function count(array, key) {
+                           return array.reduce(function (r, a) {
+                               return parseInt(r) + parseInt(a[key]);
+                           }, 0);
+                       }
+                  var total_rating= count(result,'rating');
+                    var total_order=result.length
+                    data.avarge_rating=total_rating/total_order
+                    
+                   
+                   }else{
+                       
+                    data.rating=4;
+                   
+                   } 
+        
+        
+                }
+           
+        
             axios.post(`${user_server_link}/socket/order_accepted`,{data,sender_unique,recevier_unique}).then(res=>{
-                console.log(res.data);
+                // console.log(res.data);
             });
+        });
             axios.get(`${admin_link}/driver/driver_cost/driver`).then(user=>{
             
                 
