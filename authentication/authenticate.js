@@ -437,7 +437,7 @@ router.get("/driver_total",get_token,function(req,res){
 router.get('/get_drivers',(req,res)=>{
 
     perma.find(query, fields, { skip: 10, limit: 5 }, function(err, results) { 
-        res.status(200).json(user)
+        res.status(200).json(results)
      });
 
     // perma.find({}).then(user=>{
