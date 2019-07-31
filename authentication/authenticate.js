@@ -433,6 +433,19 @@ router.get("/driver_total",get_token,function(req,res){
 })
 
 
+
+router.get('/get_drivers',(req,res)=>{
+
+    perma.find(query, fields, { skip: 10, limit: 5 }, function(err, results) { 
+        res.status(200).json(user)
+     });
+
+    // perma.find({}).then(user=>{
+    //     console.log(user)
+    //     res.status(200).json(user)});
+})
+
+
 module.exports={
     auth_route:router
 }
