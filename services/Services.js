@@ -303,7 +303,7 @@ router.post("/rating",function(req,res){
 
 
 router.post("/driver_rating",function(req,res){
-    Order.find({Driver_id:req.body.driver_id},function(err,result){
+    Order.find({Driver_id:req.body.driver_id,CurrentStatus:3,rating:{ $gt:0}},function(err,result){
         if(err){
             
             
