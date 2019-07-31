@@ -17,11 +17,8 @@ function connection(port){
     io=socket(port);
     io.on('connection',(socket)=>{
         connected_socket=socket
-        // console.log("made connection");
         //console.log(connected_socket);
         connected_socket.on("request",(data)=>{
-            console.log("17 socket_func"+data.Name);
-            console.log("Order _id is "+data.Order_id);
             var sender_unique=Math.floor(Math.random()*10000+10000);
             var recevier_unique=Math.floor(Math.random()*10000+10000);
             // axios.get(`${user_server_link}/socket/connected_users_list`).then(res=>{
@@ -35,7 +32,6 @@ function connection(port){
                     // {Driver_id:req.body.driver_id,CurrentStatus:3,rating:{ $gt:0}}
                     // [{ color: 'daffodil yellow' }, { color: 'atomic tangerine' }] 
                 }else{
-                    //    console.log("+++++++++++++++++",result,"ssssssssssssssssssss")
                     if(result!=null){
                         function count(array, key) {
                            return array.reduce(function (r, a) {
@@ -45,20 +41,20 @@ function connection(port){
                   var total_rating= count(result,'rating');
                     var total_order=result.length
                     data.avarge_rating=total_rating/total_order
+                    console.log("+++++++++++++++++++++++",data.avarge_rating,"++++++++++++++++++++++++")
                     
                    
                    }else{
                        
-                    data.rating=4;
-                   
+                    data.avarge_rating=4;
+                      console.log("+++++++++++++++++++++++"+data.avarge_rating,"ssssssssssss-")
                    } 
         
         
                 }
-           
-        
+               
+              console.log("SSSSSSSSSSSSSSSSSSSSSS",data,"+++++++++++++++++++++++++++++++++")
             axios.post(`${user_server_link}/socket/order_accepted`,{data,sender_unique,recevier_unique}).then(res=>{
-                // console.log(res.data);
             });
         });
             axios.get(`${admin_link}/driver/driver_cost/driver`).then(user=>{
@@ -67,15 +63,11 @@ function connection(port){
             var deriver_cost=user.data[0].driver_cost;
             var driver_earning=Math.round(data.Price*deriver_cost)/100;
         
-            //io.sockets.emit("request_accepted_driver",({data,sender_unique,recevier_unique}));
-            console.log("Driver name is "+data.Name)
             io.sockets.emit("this_order_is_accepted_by_driver",{Driver_Name:data.Name,Order_id:data.Order_id,code:"1"});
-            console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++",data,"___------------------------------------------------------++++++++++++++++++sssssssssssssssss")
             var latR=data.R_Latitude;
             var lonR=data.R_Longitude;
             var latg=data.G_Latitude;
             var long=data.G_Longitude;
-            console.log(latR,lonR,latg,long)
         var distance = geodist({lat: latR, lon: lonR}, {lat: latg, lon: long}) 
             const db=new Order
             db.User_id=data.User_id;
@@ -123,21 +115,17 @@ function connection(port){
         
             db.save().then(user=>{
                 notify_user(user,`Your Order was accepted by ${user.Name} is on his way.Contact him on ${user.Phone}`);
-               console.log("40 func"+user);
                io.sockets.emit("this_order_is_accepted_by_driver",{Driver_Name:data.Name,Order_id:data.Order_id,"res":"1"});
             }).catch(err=>{
-                console.log("38 socket_fucn"+err);
                 io.sockets.emit("this_order_is_accepted_by_driver",{"res":"0"});
         })
     
     
       
         connected_socket.on("driver_from_driver_driver_frontend",data=>{
-            console.log(data);
             io.sockets.emit('from_driver_to_user_frontend',data);
         })
         }).catch(err=>{
-            console.log("93 line socket_fucn"+err,"+++++++++++++SSSSSSS+++++++++++");
             
     })
     })
