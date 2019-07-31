@@ -303,10 +303,10 @@ router.post("/rating",function(req,res){
 
 
 router.post("/driver_rating",function(req,res){
-    Order.find({Driver_id:req.body.driver_id,CurrentStatus:3,rating:{ $gt:0}},function(err,result){
+    Order.find({$and:[{ Driver_id: req.body.driver_id }, { CurrentStatus: 3 },{rating:{$gt:0}}]},function(err,result){
         if(err){
-            
-            
+            // {Driver_id:req.body.driver_id,CurrentStatus:3,rating:{ $gt:0}}
+            // [{ color: 'daffodil yellow' }, { color: 'atomic tangerine' }] 
         }else{
             //    console.log("+++++++++++++++++",result,"ssssssssssssssssssss")
             if(result!=null){
