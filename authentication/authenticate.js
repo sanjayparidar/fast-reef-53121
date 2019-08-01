@@ -442,7 +442,7 @@ router.post('/get_drivers',(req,res)=>{
     }
     perma.find({},undefined,Option, function(err, results) {
          perma.count({},function(err,result){
-            console.log("++++++++++",number,"SSSSSSSSSSSSSSSSSSSSS")
+            console.log("++++++++++",result,"SSSSSSSSSSSSSSSSSSSSS")
  
             res.status(200).json(results)
         });
