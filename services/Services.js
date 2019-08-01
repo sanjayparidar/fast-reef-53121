@@ -57,6 +57,7 @@ router.post('/check_sender_otp',get_token,(req,res)=>{
                                   if(user.CurrentStatus<2){
                                 axios.get(`${admin_link}/authentication/refund/cencel/charge`).then(result=>{
                                     var refund=user.Price*(100-result.data[0].Refund_fine)/100
+                                    
                                 axios.post(`${user_server_link}/payment/delete_order`,{Order_id:req.body.Order_id,CurrentStatus:5,refund:refund,refund_fine:result.data[0].Refund_fine,show:"false"}).then(user=>{
                                     }).catch(err=>{
                                         // res.send(err)
@@ -67,7 +68,7 @@ router.post('/check_sender_otp',get_token,(req,res)=>{
                                  var refund=user.Price*(100-result.data[0].Refund_fine)/100
                                            
                                     const resp1=user;
-                                    console.log("YYYYYYYYYYYYYYY",res1.Charge_id,resp1.refund,"TTTTTTTTTTTTTTT")
+                                    console.log("YYYYYYYYYYYYYYY",resp1.Charge_id,resp1.refund,"TTTTTTTTTTTTTTT")
                                     stripe.refunds.create({
                                     charge:resp1.Charge_id,
                                     amount:parseInt(refund)
