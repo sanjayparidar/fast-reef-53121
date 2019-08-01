@@ -46,18 +46,14 @@ router.post('/check_sender_otp',get_token,(req,res)=>{
                 }
                 else{
                     if(req.body.show==="false"){
-                        console.log("hello")
                         //  not show
                         var control;
                         axios.get(`${admin_link}/authentication/get_controls/1`).then(user=>{
                         control=user.data;
                         
                         
-                                    console.log("hello2")
-                                    // console.log(req.body.Order_id,"___)))))")
                                   Order.findOne({Order_id:req.body.Order_id}).then(user=>{
                                       
-                                    console.log("hello2")
                                   if(user.CurrentStatus<2){
                                 axios.get(`${admin_link}/authentication/refund/cencel/charge`).then(result=>{
                                     var refund=user.Price*(100-result.data[0].Refund_fine)/100
@@ -67,20 +63,22 @@ router.post('/check_sender_otp',get_token,(req,res)=>{
                                         res.status(200).json({msg:"error updatin in driver side"});
                                     })
                                   
-                                           console.log("ssssssss",result,"sssssssssss");
 
                                           var refund=user.Price*(100-result.data[0].Refund_fine)/100
                                     Order.findOneAndUpdate({Order_id:req.body.Order_id},{CurrentStatus:5,refund:refund,refund_fine:result.data[0].Refund_fine,show:"false"}).then(user=>{
                                     const resp1=user;
-                                    // console.log(resp1.Charge_id,"+++++++++++sssssssssss+++++++++++")
                                     stripe.refunds.create({
                                     charge:resp1.Charge_id,
                                     amount:refund
                                   }).then(refund=>{
-                                    console.log(refund);
-                                    
+                                    console.log("++++++++ssssss+++++++++",refund,"+++++ssssss+++++++");
+                                    console.log("++++++++++++success+++++++++++++++++++++")
+
                                     res.status(200).json({res:"1",msg:"successfully cancelled orer"});
                                   }).catch(err=>{
+                                    console.log(err);
+                                    res.status(400).json({res:"2",msg:"error in stripe refunding"});
+                                   }).catch(err=>{
                                     console.log(err);
                                     res.status(400).json({res:"2",msg:"error in refunding"});
                                    })
