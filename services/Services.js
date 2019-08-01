@@ -69,7 +69,7 @@ router.post('/check_sender_otp',get_token,(req,res)=>{
                                     const resp1=user;
                                     stripe.refunds.create({
                                     charge:resp1.Charge_id,
-                                    amount:refund
+                                    amount:parseInt(refund)
                                   }).then(refund=>{
                                     console.log("++++++++ssssss+++++++++",refund,"+++++ssssss+++++++");
                                     console.log("++++++++++++success+++++++++++++++++++++")
