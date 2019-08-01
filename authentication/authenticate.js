@@ -441,10 +441,12 @@ router.post('/get_drivers',(req,res)=>{
 			"skip": (req.body.page - 1) * 2
     }
     perma.find({},undefined,Option, function(err, results) {
-        const number = await perma.count();
-        console.log("++++++++++",number,"SSSSSSSSSSSSSSSSSSSSS")
+         perma.count({},function(err,result){
+            console.log("++++++++++",number,"SSSSSSSSSSSSSSSSSSSSS")
  
-        res.status(200).json(results)
+            res.status(200).json(results)
+        });
+        
      });
 
     // perma.find({}).sort([['updatedAt', 'ascending']]).skip(1).limit(2).then(user=>{
