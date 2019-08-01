@@ -310,6 +310,22 @@ router.get('/order/complete',(req,res)=>{
     })
 })
 
+// new
+router.post('/order',(req,res)=>{
+    Option={
+        "sort":"-_id",
+			"limit": 10,
+			"skip": (req.body.page - 1) * 10
+    }
+    Order.find({CurrentStatus:req.body.CurrentStatus},undefined,Option, function(err, results) { 
+        res.status(200).json(results)
+     });
+})
+
+
+
+// new
+
 
 
 module.exports={

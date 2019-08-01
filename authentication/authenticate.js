@@ -432,19 +432,36 @@ router.get("/driver_total",get_token,function(req,res){
 
 })
 
+// mynew
 
-
-router.get('/get_drivers',(req,res)=>{
-
-    perma.find(query, fields, { skip: 10, limit: 5 }, function(err, results) { 
+router.post('/get_drivers',(req,res)=>{
+    Option={
+        "sort":"-_id",
+			"limit": 10,
+			"skip": (req.body.page - 1) * 10
+    }
+    perma.find({},undefined,Option, function(err, results) { 
         res.status(200).json(results)
      });
 
-    // perma.find({}).then(user=>{
+    // perma.find({}).sort([['updatedAt', 'ascending']]).skip(1).limit(2).then(user=>{
     //     console.log(user)
     //     res.status(200).json(user)});
 })
 
+
+router.post('/get_unverified_drivers',(req,res)=>{
+       Option={
+        "sort":"-_id",
+			"limit": 10,
+			"skip": (req.body.page - 1) * 10
+    }
+    temp.find({},undefined,Option, function(err, results) { 
+        res.status(200).json(results)
+     });
+})
+
+//mynew 
 
 module.exports={
     auth_route:router
