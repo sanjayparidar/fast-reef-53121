@@ -440,7 +440,10 @@ router.post('/get_drivers',(req,res)=>{
 			"limit": 2,
 			"skip": (req.body.page - 1) * 2
     }
-    perma.find({},undefined,Option, function(err, results) { 
+    perma.find({},undefined,Option, function(err, results) {
+        const number = await perma.count();
+        console.log("++++++++++",number,"SSSSSSSSSSSSSSSSSSSSS")
+ 
         res.status(200).json(results)
      });
 
