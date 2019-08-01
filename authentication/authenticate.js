@@ -438,7 +438,7 @@ router.post('/get_drivers',(req,res)=>{
     Option={
         "sort":"-_id",
 			"limit": 2,
-			"skip": (req.body.page - 1) * 10
+			"skip": (req.body.page - 1) * 2
     }
     perma.find({},undefined,Option, function(err, results) { 
         res.status(200).json(results)
