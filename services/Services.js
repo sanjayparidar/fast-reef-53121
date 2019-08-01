@@ -45,7 +45,7 @@ router.post('/check_sender_otp',get_token,(req,res)=>{
                     })
                 }
                 else{
-                    if(req.body.show==="false"){
+                    if(req.body.show=="false"){
                         //  not show
                         var control;
                         axios.get(`${admin_link}/authentication/get_controls/1`).then(user=>{
