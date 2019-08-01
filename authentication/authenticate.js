@@ -437,7 +437,7 @@ router.get("/driver_total",get_token,function(req,res){
 router.post('/get_drivers',(req,res)=>{
     Option={
         "sort":"-_id",
-			"limit": 10,
+			"limit": 2,
 			"skip": (req.body.page - 1) * 10
     }
     perma.find({},undefined,Option, function(err, results) { 
