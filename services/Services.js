@@ -64,8 +64,8 @@ router.post('/check_sender_otp',get_token,(req,res)=>{
                                     })
                                   
 
-                                          var refund=user.Price*(100-result.data[0].Refund_fine)/100
-                                    Order.findOneAndUpdate({Order_id:req.body.Order_id},{CurrentStatus:5,refund:refund,refund_fine:result.data[0].Refund_fine,show:"false"}).then(user=>{
+                                 var refund=user.Price*(100-result.data[0].Refund_fine)/100
+
                                     const resp1=user;
                                     stripe.refunds.create({
                                     charge:resp1.Charge_id,
@@ -73,15 +73,16 @@ router.post('/check_sender_otp',get_token,(req,res)=>{
                                   }).then(refund=>{
                                     console.log("++++++++ssssss+++++++++",refund,"+++++ssssss+++++++");
                                     console.log("++++++++++++success+++++++++++++++++++++")
-
+                                    Order.findOneAndUpdate({Order_id:req.body.Order_id},{CurrentStatus:5,refund:refund,refund_fine:result.data[0].Refund_fine,show:"false"}).then(user=>{
                                     res.status(200).json({res:"1",msg:"successfully cancelled orer"});
-                                  }).catch(err=>{
-                                    console.log(err);
-                                    res.status(400).json({res:"2",msg:"error in stripe refunding"});
-                                   }).catch(err=>{
+                                }).catch(err=>{
                                     console.log(err);
                                     res.status(400).json({res:"2",msg:"error in refunding"});
-                                   })
+                                   })  
+                                }).catch(err=>{
+                                    console.log(err);
+                                    res.status(400).json({res:"2",msg:"error in stripe refunding"});
+                                   
                                   
                                   }).catch(err=>{
                                     console.log(err)
