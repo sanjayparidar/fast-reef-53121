@@ -74,6 +74,7 @@ function connection(port){
             db.Driver_id=data.Driver_id;
             db.Order_id=data.Order_id;
             db.Name=data.Name;
+            db.Charge_id=data.Charge_id;
             db.Phone=data.Phone;
             db.Email=data.Email;
             db.Commodity=data.Commodity;
