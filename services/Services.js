@@ -65,10 +65,11 @@ router.post('/check_sender_otp',get_token,(req,res)=>{
                                   
 
                                  var refund=user.Price*(100-result.data[0].Refund_fine)/100
-
+                                           
                                     const resp1=user;
+                                    console.log("YYYYYYYYYYYYYYY",res1.Charge_id,resp1.refund,"TTTTTTTTTTTTTTT")
                                     stripe.refunds.create({
-                                    charge:toString(resp1.Charge_id),
+                                    charge:resp1.Charge_id,
                                     amount:parseInt(refund)
                                   }).then(refund=>{
                                     console.log("++++++++ssssss+++++++++",refund,"+++++ssssss+++++++");
