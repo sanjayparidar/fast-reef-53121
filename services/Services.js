@@ -71,19 +71,19 @@ router.post('/check_sender_otp',get_token,(req,res)=>{
 
                                           var refund=user.Price*(100-result.data[0].Refund_fine)/100
                                     Order.findOneAndUpdate({Order_id:req.body.Order_id},{CurrentStatus:5,refund:refund,refund_fine:result.data[0].Refund_fine,show:"false"}).then(user=>{
-                                    // const resp1=user;
+                                    const resp1=user;
                                     // console.log(resp1.Charge_id,"+++++++++++sssssssssss+++++++++++")
-                                //     stripe.refunds.create({
-                                //     charge:resp1.Charge_id,
-                                //     amount:resp1.Price*control/100
-                                //   }).then(refund=>{
-                                //     console.log(refund);
+                                    stripe.refunds.create({
+                                    charge:resp1.Charge_id,
+                                    amount:refund
+                                  }).then(refund=>{
+                                    console.log(refund);
                                     
                                     res.status(200).json({res:"1",msg:"successfully cancelled orer"});
-                                //   }).catch(err=>{
-                                //     console.log(err);
-                                //     res.status(400).json({res:"2",msg:"error in refunding"});
-                                //    })
+                                  }).catch(err=>{
+                                    console.log(err);
+                                    res.status(400).json({res:"2",msg:"error in refunding"});
+                                   })
                                   
                                   }).catch(err=>{
                                     console.log(err)
@@ -290,7 +290,7 @@ router.get('/search_email/:email',(req,res)=>{
 //route ended
 
 router.post("/rating",function(req,res){
-    console.log("++++++++++++++++++",req.body,"++++++++++++++++++++")
+    
     Order.findOneAndUpdate({Order_id:req.body.Order_id},{rating:req.body.rating,comment:req.body.comment}).then(res1=>{
             
         res.status(200).json({response:"0",status:"success"});
