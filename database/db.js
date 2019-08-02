@@ -64,6 +64,8 @@ const Order_Schema=new mongoose.Schema({
     partnercommission:String,
     farepermile:String,
     adminearning:String,
+    box:String,
+    box_name:String
     
 })
 

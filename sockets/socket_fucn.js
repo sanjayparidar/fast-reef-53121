@@ -113,6 +113,8 @@ function connection(port){
             db.farepermile=data.farepermile;
             db.adminearning=data.Price-driver_earning;
             db.distance=distance;
+            db.box=data.box;
+            db.box_name=data.box_name;
         
             db.save().then(user=>{
                 notify_user(user,`Your Order was accepted by ${user.Name} is on his way.Contact him on ${user.Phone}`);
