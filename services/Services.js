@@ -65,13 +65,13 @@ router.post('/check_sender_otp',get_token,(req,res)=>{
                                     })
                                   
 
-                                 var refund=user.Price*(100-result.data[0].Refund_fine)/100
+                                 var refundstripe=parseFloat(user.Price*(100-result.data[0].Refund_fine)/100)*100
                                            
                                     const resp1=user;
                                     console.log("YYYYYYYYYYYYYYY",resp1.Charge_id,resp1.refund,"TTTTTTTTTTTTTTT")
                                     stripe.refunds.create({
                                     charge:resp1.Charge_id,
-                                    amount:parseInt(refund)
+                                    amount:parseInt(refundstripe)
                                   }).then(refundsuccess=>{
                                     Order.findOneAndUpdate({Order_id:req.body.Order_id},{CurrentStatus:5,refund:refund,refund_fine:result.data[0].Refund_fine,show:"false"}).then(user=>{
                                     res.status(200).json({res:"1",msg:"successfully cancelled orer"});
@@ -319,7 +319,26 @@ router.post('/order',(req,res)=>{
     Order.find({CurrentStatus:req.body.CurrentStatus},undefined,Option, function(err, results) { 
         res.status(200).json(results)
      });
-})
+});
+
+
+router.post('/order/search',(req,res)=>{
+    Option={
+        "sort":"-_id",
+			"limit": 10,
+			"skip": (req.body.page - 1) * 10
+    }
+    Order.find({$or:[{'Giver_Phone': {'$regex': req.body.search,'$options': 'i'}},{'Name': {'$regex': req.body.search,'$options': 'i'}}]},undefined,Option, function(err, results) { 
+       if(err){
+        res.status(400).json({response:"1",error:"error in driver"});
+
+       }
+        res.status(200).json(results)
+     });
+});
+
+
+
 
 
 

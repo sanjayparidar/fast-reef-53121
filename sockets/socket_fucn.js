@@ -61,14 +61,10 @@ function connection(port){
             
                 
             var deriver_cost=user.data[0].driver_cost;
-            var driver_earning=Math.round(data.Price*deriver_cost)/100;
+            var driver_earning=parseFloat(Math.round(data.Price*deriver_cost)/100);
         
             io.sockets.emit("this_order_is_accepted_by_driver",{Driver_Name:data.Name,Order_id:data.Order_id,code:"1"});
-            var latR=data.R_Latitude;
-            var lonR=data.R_Longitude;
-            var latg=data.G_Latitude;
-            var long=data.G_Longitude;
-        var distance = geodist({lat: latR, lon: lonR}, {lat: latg, lon: long}) 
+        
             const db=new Order
             db.User_id=data.User_id;
             db.Driver_id=data.Driver_id;
@@ -112,7 +108,7 @@ function connection(port){
             db.partnercommission=deriver_cost;
             db.farepermile=data.farepermile;
             db.adminearning=data.Price-driver_earning;
-            db.distance=distance;
+            db.distance=data.distance;
             db.box=data.box;
             db.box_name=data.box_name;
         
