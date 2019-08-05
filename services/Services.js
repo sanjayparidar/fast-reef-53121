@@ -323,12 +323,8 @@ router.post('/order',(req,res)=>{
 
 
 router.post('/order/search',(req,res)=>{
-    Option={
-        "sort":"-_id",
-			"limit": 10,
-			"skip": (req.body.page - 1) * 10
-    }
-    Order.find({$or:[{'Giver_Phone': {'$regex': req.body.search,'$options': 'i'}},{'Name': {'$regex': req.body.search,'$options': 'i'}}]},undefined,Option, function(err, results) { 
+    
+    Order.find({$or:[{'Giver_Phone': {'$regex': req.body.search,'$options': 'i'}},{'Name': {'$regex': req.body.search,'$options': 'i'}}]},function(err, results) { 
        if(err){
         res.status(400).json({response:"1",error:"error in driver"});
 
