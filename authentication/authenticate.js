@@ -466,6 +466,26 @@ router.post('/get_unverified_drivers',(req,res)=>{
      });
 })
 
+
+router.post('/get_drivers/search',(req,res)=>{
+    
+    perma.find({$or:[{'MobileNo': {'$regex': req.body.search,'$options': 'i'}},{'Name': {'$regex': req.body.search,'$options': 'i'}}]},function(err, results) { 
+        if(err){
+         res.status(400).json({response:"1",error:"error in driver"});
+    
+        }
+         res.status(200).json(results)
+      });
+    // perma.find({}).sort([['updatedAt', 'ascending']]).skip(1).limit(2).then(user=>{
+    //     console.log(user)
+    //     res.status(200).json(user)});
+})
+
+
+
+
+
+
 //mynew 
 
 module.exports={
