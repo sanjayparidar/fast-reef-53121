@@ -32,7 +32,7 @@ function connection(port){
                     // {Driver_id:req.body.driver_id,CurrentStatus:3,rating:{ $gt:0}}
                     // [{ color: 'daffodil yellow' }, { color: 'atomic tangerine' }] 
                 }else{
-                    if(result!=null){
+                    if(result.length>0){
                         function count(array, key) {
                            return array.reduce(function (r, a) {
                                return parseInt(r) + parseInt(a[key]);
@@ -43,11 +43,9 @@ function connection(port){
                     data.avarge_rating=total_rating/total_order
                     console.log("+++++++++++++++++++++++",data.avarge_rating,"++++++++++++++++++++++++")
                     
-                   
                    }else{
                        
-                    data.avarge_rating=4;
-                      console.log("+++++++++++++++++++++++"+data.avarge_rating,"ssssssssssss-")
+                    data.avarge_rating="";
                    } 
         
         
@@ -103,7 +101,7 @@ function connection(port){
             db.refund=data.refund;
             db.refund_fine=data.refund_fine;
             db.show="";
-            db.rating="0";
+            db.rating="";
             db.comment="";
             db.partnercommission=deriver_cost;
             db.farepermile=data.farepermile;

@@ -488,8 +488,9 @@ router.post('/get_unverified_drivers/search',(req,res)=>{
         if(err){
          res.status(400).json({response:"1",error:"error in driver"});
     
-        }
+        }else{
          res.status(200).json(results)
+        }
       });
     // perma.find({}).sort([['updatedAt', 'ascending']]).skip(1).limit(2).then(user=>{
     //     console.log(user)
