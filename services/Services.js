@@ -57,8 +57,8 @@ router.post('/check_sender_otp',get_token,(req,res)=>{
                                   if(user.CurrentStatus<2){
                                 axios.get(`${admin_link}/authentication/refund/cencel/charge`).then(result=>{
                                     var refund=user.Price*(100-result.data[0].Refund_fine)/100
-                                    
-                                axios.post(`${user_server_link}/payment/delete_order`,{Order_id:req.body.Order_id,CurrentStatus:5,refund:refund,refund_fine:result.data[0].Refund_fine,show:"false"}).then(user=>{
+                                    var adminearn=user.Price*(result.data[0].refund_fine)/100
+                                axios.post(`${user_server_link}/payment/delete_order`,{Order_id:req.body.Order_id,CurrentStatus:5,refund:refund,refund_fine:result.data[0].Refund_fine,show:"false",adminearning:adminearn}).then(user=>{
                                     }).catch(err=>{
                                         // res.send(err)
                                         res.status(200).json({msg:"error updatin in driver side"});
@@ -223,10 +223,40 @@ router.get('/pending_order',get_token,(req,res)=>{
 
 //route to get the all orders
 router.get('/order',(req,res)=>{
-    Order.find({CurrentStatus:3}).then(user=>{
-        user.reverse();
-        res.status(200).json(user);
-    })
+    // Order.find({CurrentStatus:3}).then(user=>{
+    //     user.reverse();
+    //     res.status(200).json(user);
+    // })
+
+    Order.aggregate([
+        { $match: { CurrentStatus: 3 } },
+        { $group: { _id: null, amount: { $sum: { $toDouble : "$Price" } } } }
+    
+    ]
+    ,function(err,result){
+            console.log(err)
+            console.log("hello")
+            res.send(result)
+        });
+
+    // Order.aggregate([{
+    //     $match :   {CurrentStatus: 3},
+    // },{
+    //     "$group" : {
+    //         _id:"$_id",
+    //         total : {
+    //             $sum : "$CurrentStatus"
+    //         }
+    //     }
+
+    // }],function(err,result){
+    //     console.log(err)
+    //     console.log("hello")
+    //     res.send(result)
+    // });
+
+
+
 })
 //route ended///
 
