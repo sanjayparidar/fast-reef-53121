@@ -223,7 +223,7 @@ router.get('/pending_order',get_token,(req,res)=>{
 
 //route to get the all orders
 router.get('/order',(req,res)=>{
-    Order.find({}).then(user=>{
+    Order.find({CurrentStatus:3}).then(user=>{
         user.reverse();
         res.status(200).json(user);
     })
