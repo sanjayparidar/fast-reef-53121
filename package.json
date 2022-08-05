@@ -23,7 +23,7 @@
     "geodist": "^0.2.1",
     "gridfs-stream": "^1.1.1",
     "jsonwebtoken": "^8.5.0",
-    "mongoose": "^5.4.17",
+    "mongoose": "^5.7.5",
     "multer": "^1.4.1",
     "multer-gridfs-storage": "^3.2.3",
     "node-cron": "^2.0.3",
